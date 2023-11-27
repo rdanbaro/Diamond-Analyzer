@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'vista_inicio.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.0
+## Created by: Qt User Interface Compiler version 6.6.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -109,20 +109,20 @@ class Ui_VistaInicio(object):
         self.widget.setGeometry(QRect(160, 90, 271, 271))
         self.verticalLayout = QVBoxLayout(self.widget)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.pushButton = QPushButton(self.widget)
-        self.pushButton.setObjectName(u"pushButton")
+        self.sprintAnalysisButton = QPushButton(self.widget)
+        self.sprintAnalysisButton.setObjectName(u"sprintAnalysisButton")
 
-        self.verticalLayout.addWidget(self.pushButton)
+        self.verticalLayout.addWidget(self.sprintAnalysisButton)
 
-        self.pushButton_2 = QPushButton(self.widget)
-        self.pushButton_2.setObjectName(u"pushButton_2")
+        self.statsButton = QPushButton(self.widget)
+        self.statsButton.setObjectName(u"statsButton")
 
-        self.verticalLayout.addWidget(self.pushButton_2)
+        self.verticalLayout.addWidget(self.statsButton)
 
-        self.pushButton_3 = QPushButton(self.widget)
-        self.pushButton_3.setObjectName(u"pushButton_3")
+        self.exitButton = QPushButton(self.widget)
+        self.exitButton.setObjectName(u"exitButton")
 
-        self.verticalLayout.addWidget(self.pushButton_3)
+        self.verticalLayout.addWidget(self.exitButton)
 
         self.welcome = QLabel(self.centralwidget)
         self.welcome.setObjectName(u"welcome")
@@ -143,9 +143,9 @@ class Ui_VistaInicio(object):
 
     def retranslateUi(self, VistaInicio):
         VistaInicio.setWindowTitle(QCoreApplication.translate("VistaInicio", u"MainWindow", None))
-        self.pushButton.setText(QCoreApplication.translate("VistaInicio", u"An\u00e1lisis Sprint", None))
-        self.pushButton_2.setText(QCoreApplication.translate("VistaInicio", u"Estad\u00edsticas", None))
-        self.pushButton_3.setText(QCoreApplication.translate("VistaInicio", u"Salir", None))
+        self.sprintAnalysisButton.setText(QCoreApplication.translate("VistaInicio", u"An\u00e1lisis Sprint", None))
+        self.statsButton.setText(QCoreApplication.translate("VistaInicio", u"Estad\u00edsticas", None))
+        self.exitButton.setText(QCoreApplication.translate("VistaInicio", u"Salir", None))
         self.welcome.setText(QCoreApplication.translate("VistaInicio", u"<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600; text-decoration: underline; color:#ff0354;\">WELCOME</span></p></body></html>", None))
     # retranslateUi
 
