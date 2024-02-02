@@ -107,25 +107,25 @@ class Ui_Form(object):
 
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.lineEdit_2 = QLineEdit(Form)
-        self.lineEdit_2.setObjectName(u"lineEdit_2")
+        self.entry_metas = QLineEdit(Form)
+        self.entry_metas.setObjectName(u"entry_metas")
 
-        self.verticalLayout_2.addWidget(self.lineEdit_2)
+        self.verticalLayout_2.addWidget(self.entry_metas)
 
-        self.lineEdit_3 = QLineEdit(Form)
-        self.lineEdit_3.setObjectName(u"lineEdit_3")
+        self.entry_habitos = QLineEdit(Form)
+        self.entry_habitos.setObjectName(u"entry_habitos")
 
-        self.verticalLayout_2.addWidget(self.lineEdit_3)
+        self.verticalLayout_2.addWidget(self.entry_habitos)
 
-        self.lineEdit_4 = QLineEdit(Form)
-        self.lineEdit_4.setObjectName(u"lineEdit_4")
+        self.entry_diamantes = QLineEdit(Form)
+        self.entry_diamantes.setObjectName(u"entry_diamantes")
 
-        self.verticalLayout_2.addWidget(self.lineEdit_4)
+        self.verticalLayout_2.addWidget(self.entry_diamantes)
 
-        self.lineEdit_5 = QLineEdit(Form)
-        self.lineEdit_5.setObjectName(u"lineEdit_5")
+        self.entry_entrenamiento = QLineEdit(Form)
+        self.entry_entrenamiento.setObjectName(u"entry_entrenamiento")
 
-        self.verticalLayout_2.addWidget(self.lineEdit_5)
+        self.verticalLayout_2.addWidget(self.entry_entrenamiento)
 
 
         self.horizontalLayout_3.addLayout(self.verticalLayout_2)
@@ -143,10 +143,10 @@ class Ui_Form(object):
 
         self.horizontalLayout_4.addWidget(self.boton_cancelar)
 
-        self.pushButton_2 = QPushButton(Form)
-        self.pushButton_2.setObjectName(u"pushButton_2")
+        self.boton_aceptar = QPushButton(Form)
+        self.boton_aceptar.setObjectName(u"boton_aceptar")
 
-        self.horizontalLayout_4.addWidget(self.pushButton_2)
+        self.horizontalLayout_4.addWidget(self.boton_aceptar)
 
 
         self.verticalLayout_5.addLayout(self.horizontalLayout_4)
@@ -170,6 +170,6 @@ class Ui_Form(object):
         self.label_5.setText(QCoreApplication.translate("Form", u"Diamantes", None))
         self.label_6.setText(QCoreApplication.translate("Form", u"Entrenamiento", None))
         self.boton_cancelar.setText(QCoreApplication.translate("Form", u"Cancelar", None))
-        self.pushButton_2.setText(QCoreApplication.translate("Form", u"Aceptar", None))
+        self.boton_aceptar.setText(QCoreApplication.translate("Form", u"Aceptar", None))
     # retranslateUi
 

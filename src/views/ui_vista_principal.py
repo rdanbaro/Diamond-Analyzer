@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayoutWidget = QWidget(self.centralwidget)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(50, 40, 321, 411))
+        self.verticalLayoutWidget.setGeometry(QRect(20, 40, 551, 421))
         self.contenedor_form = QVBoxLayout(self.verticalLayoutWidget)
         self.contenedor_form.setObjectName(u"contenedor_form")
         self.contenedor_form.setContentsMargins(0, 0, 0, 0)

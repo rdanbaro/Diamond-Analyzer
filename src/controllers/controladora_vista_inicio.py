@@ -8,6 +8,7 @@ class VistaInicio(QMainWindow, Ui_VistaInicio):
         super().__init__()
         self.setupUi(self)
         
+        
         self.exitButton.clicked.connect(self.exit)
         self.sprintAnalysisButton.clicked.connect(self.sprint_analysis)
 
