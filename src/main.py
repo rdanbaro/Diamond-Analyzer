@@ -9,6 +9,3 @@ inicio = VistaInicio()
 inicio.show()
 
 app.exec()
-
-
-
