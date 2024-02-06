@@ -1,11 +1,20 @@
 import sys
+import database
 from PySide6.QtWidgets import QApplication
 from PySide6.QtWidgets import QWidget
-from controllers.controladora_vista_inicio import VistaInicio
+from controllers.controladora_principal import VistaPrincipal
 
 app = QApplication(sys.argv)
 
-inicio = VistaInicio()
-inicio.show()
+inicio = VistaPrincipal()
+
 
 app.exec()
+
+if __name__ == "__main__":
+    #Base.metadata.drop_all(database.link)
+    try:
+        Base.metadata.create_all(database.link)
+
+    except Exception as e:
+        print("seguimos adelante")
