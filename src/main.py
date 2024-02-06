@@ -3,6 +3,7 @@ import database
 from PySide6.QtWidgets import QApplication
 from PySide6.QtWidgets import QWidget
 from controllers.controladora_principal import VistaPrincipal
+from models.modelos import *
 
 app = QApplication(sys.argv)
 
@@ -18,3 +19,4 @@ if __name__ == "__main__":
 
     except Exception as e:
         print("seguimos adelante")
+

@@ -42,10 +42,10 @@ class VistaPrincipal(QMainWindow, Ui_MainWindow):
     
     
     def validar_form(self): 
-        self.vista_formulario.form_validator()
-        self.contenedor_form.removeWidget(self)
-        self.vista_formulario.deleteLater()
-        self.contenedor_form.addWidget(self.vista_review)    
+        if self.vista_formulario.form_validator():  # Verificar si el validador devuelve True
+            self.contenedor_form.removeWidget(self)
+            self.vista_formulario.deleteLater()
+            self.contenedor_form.addWidget(self.vista_review)  
     
     def cancelar_form(self):
         self.close()
