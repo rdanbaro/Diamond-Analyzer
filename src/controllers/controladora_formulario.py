@@ -8,12 +8,17 @@ class Formulario(QWidget, Ui_Form):
         super().__init__()
         
         self.setupUi(self)
-
+        self.ruta=' '
     def form_validator(self):
         form_valido = True
         try:
             # Obtener el texto del campo de entrada del nombre del sprint
             sprint = self.entry_nombre_sprint.text().strip()
+            # Consultar si el nombre del sprint ya existe en la base de datos
+            if database.sesion.query(Sprint).filter_by(nombre_sprint=sprint).first():
+                form_valido = False
+                raise ValueError("El nombre del sprint introducido ya existe")
+    
             if not sprint:
                 form_valido = False
                 raise ValueError("El campo de nombre de sprint no puede estar vacío")
@@ -36,6 +41,7 @@ class Formulario(QWidget, Ui_Form):
     
             # Obtener el texto del campo de entrada de las metas
             metas = self.entry_metas.text().strip()
+            
             if not metas:
                 form_valido = False
                 raise ValueError("El campo de metas no puede estar vacío")
@@ -57,17 +63,9 @@ class Formulario(QWidget, Ui_Form):
             if not entrenamiento:
                 form_valido = False
                 raise ValueError("El campo de entrenamiento no puede estar vacío")
-    
-            # Crear una nueva fila en la tabla Sprint
-            new_sprint = Sprint(nombre_sprint=sprint, tipo=tipo_sprint_seleccionado, data_metas_objetivos=metas,
-                                data_Habitos=habitos, data_Diamantes=diamantes, data_Entrenamiento=entrenamiento)
-    
-            # Agregar la nueva fila a la sesión
-            database.sesion.add(new_sprint)
-    
-            # Confirmar los cambios en la base de datos
-            database.sesion.commit()
-    
+
+           
+
             # Imprimir los valores obtenidos
             print(sprint, tipo_sprint_seleccionado, metas, habitos, diamantes, entrenamiento, sep='\n')
         except ValueError as ve:
@@ -77,11 +75,26 @@ class Formulario(QWidget, Ui_Form):
             # Mostrar un mensaje de error
             print("Ha ocurrido un error al validar el formulario.")
             print(e)
+
+        if form_valido:
+            # Crear una nueva fila en la tabla Sprint
+            new_sprint = Sprint(nombre_sprint=sprint, tipo=tipo_sprint_seleccionado, data_metas_objetivos=metas,
+                                data_Habitos=habitos, data_Diamantes=diamantes, data_Entrenamiento=entrenamiento)
     
-        
+            # Agregar la nueva fila a la sesión
+            database.sesion.add(new_sprint)
     
+            # Confirmar los cambios en la base de datos
+            database.sesion.commit()
+
+                
+                
+            return form_valido, sprint, tipo_sprint_seleccionado, metas, habitos, diamantes, entrenamiento 
+        else:
+            return form_valido, 0, 0, 0, 0, 0, 0    
+
         
-        return form_valido
+        
         
 
         

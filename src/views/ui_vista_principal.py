@@ -25,12 +25,13 @@ class Ui_MainWindow(object):
         MainWindow.resize(701, 515)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.verticalLayoutWidget = QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(20, 40, 551, 421))
-        self.contenedor_form = QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout = QVBoxLayout(self.centralwidget)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.contenedor_form = QVBoxLayout()
         self.contenedor_form.setObjectName(u"contenedor_form")
-        self.contenedor_form.setContentsMargins(0, 0, 0, 0)
+
+        self.verticalLayout.addLayout(self.contenedor_form)
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
