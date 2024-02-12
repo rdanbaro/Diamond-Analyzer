@@ -31,6 +31,12 @@ class VistaGeneral(QWidget, Ui_GeneralView):
 
     def mostrar_sprint(self, titulo):
         sprint = database.sesion.query(Sprint).filter(Sprint.nombre_sprint == titulo).first()
+        self.layout_contenedor_metas.removeWidget(self.vista_metas)
+        self.vista_metas.deleteLater()
+        
+        self.vista_metas = SprintReview()
+        #self.vista_metas.removeWidget(self.vista.Boton_Siguiente)
+        self.vista_metas.Boton_Siguiente.deleteLater()
         self.vista_metas.dame_info_view(sprint.nombre_sprint, sprint.tipo, sprint.data_metas_objetivos, sprint.data_Habitos, sprint.data_Diamantes, sprint.data_Entrenamiento)
         self.layout_contenedor_metas.addWidget(self.vista_metas)
         
@@ -56,9 +62,9 @@ class VistaGeneral(QWidget, Ui_GeneralView):
             # self.lista_botones.append(button)
 
         list(map(lambda i: self.layout_sprints.addWidget(i), self.lista_botones))
-        boton_texto = self.lista_botones[0].text()
-        print(boton_texto)
-        self.lista_botones[0].clicked.connect(lambda: self.mostrar_sprint(boton_texto))
+        #boton_texto = self.lista_botones[0].text()
+        #print(boton_texto)
+        #self.lista_botones[0].clicked.connect(lambda: self.mostrar_sprint(boton_texto))
         
-        # list(map(lambda boton: boton.clicked.connect(
-        #     lambda: self.mostrar_sprint(boton.text())), self.lista_botones))
+        list(map(lambda boton: boton.clicked.connect(
+            lambda: self.mostrar_sprint(boton.text())), self.lista_botones))

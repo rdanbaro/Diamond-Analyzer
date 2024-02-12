@@ -17,7 +17,7 @@ def get_datos_metas(ruta):
     list_realizado = [True if i.strip() == 'Yes' else False for i in list(datos['Realizado'])]
     
     
-
+    
     return list_objs, list_requisito, list_cumplido, list_realizado 
     
 

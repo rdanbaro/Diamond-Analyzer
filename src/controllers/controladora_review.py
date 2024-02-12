@@ -68,5 +68,6 @@ class SprintReview(QWidget, Ui_Sprint_Review):
 
         #self.label_mensaje.setText(mensaje)
         
-
+            
         
+       
