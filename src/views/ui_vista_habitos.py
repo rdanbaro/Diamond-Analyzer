@@ -15,8 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QLabel, QSizePolicy, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
+    QSizePolicy, QVBoxLayout, QWidget)
 
 class Ui_VistaHabitos(object):
     def setupUi(self, VistaHabitos):
@@ -96,21 +96,50 @@ class Ui_VistaHabitos(object):
 #endif
         VistaHabitos.setPalette(palette)
         VistaHabitos.setStyleSheet(u"background-color: rgb(168, 218, 220);")
-        self.verticalLayout_2 = QVBoxLayout(VistaHabitos)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.Layout_habitos = QVBoxLayout()
-        self.Layout_habitos.setSpacing(0)
-        self.Layout_habitos.setObjectName(u"Layout_habitos")
+        self.gridLayout = QGridLayout(VistaHabitos)
+        self.gridLayout.setSpacing(0)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.gridLayout.setContentsMargins(0, 6, 0, 0)
+        self.Layout_stats = QVBoxLayout()
+        self.Layout_stats.setObjectName(u"Layout_stats")
         self.label = QLabel(VistaHabitos)
         self.label.setObjectName(u"label")
         self.label.setStyleSheet(u"background-color: rgb(168, 218, 220);\n"
 "gridline-color: rgb(168, 218, 220);\n"
 "border-color: rgb(168, 218, 220);")
 
-        self.Layout_habitos.addWidget(self.label)
+        self.Layout_stats.addWidget(self.label)
 
 
-        self.verticalLayout_2.addLayout(self.Layout_habitos)
+        self.gridLayout.addLayout(self.Layout_stats, 0, 0, 1, 1)
+
+        self.Layout_graf1 = QVBoxLayout()
+        self.Layout_graf1.setObjectName(u"Layout_graf1")
+
+        self.gridLayout.addLayout(self.Layout_graf1, 2, 0, 1, 1)
+
+        self.Layout_graf2 = QVBoxLayout()
+        self.Layout_graf2.setObjectName(u"Layout_graf2")
+
+        self.gridLayout.addLayout(self.Layout_graf2, 2, 1, 1, 1)
+
+        self.horizontalLayout_graf3 = QHBoxLayout()
+        self.horizontalLayout_graf3.setSpacing(0)
+        self.horizontalLayout_graf3.setObjectName(u"horizontalLayout_graf3")
+        self.Layout_graf3_1 = QVBoxLayout()
+        self.Layout_graf3_1.setSpacing(0)
+        self.Layout_graf3_1.setObjectName(u"Layout_graf3_1")
+
+        self.horizontalLayout_graf3.addLayout(self.Layout_graf3_1)
+
+        self.Layout_graf3_2 = QVBoxLayout()
+        self.Layout_graf3_2.setSpacing(0)
+        self.Layout_graf3_2.setObjectName(u"Layout_graf3_2")
+
+        self.horizontalLayout_graf3.addLayout(self.Layout_graf3_2)
+
+
+        self.gridLayout.addLayout(self.horizontalLayout_graf3, 0, 1, 1, 1)
 
 
         self.retranslateUi(VistaHabitos)
@@ -120,6 +149,6 @@ class Ui_VistaHabitos(object):
 
     def retranslateUi(self, VistaHabitos):
         VistaHabitos.setWindowTitle(QCoreApplication.translate("VistaHabitos", u"Form", None))
-        self.label.setText(QCoreApplication.translate("VistaHabitos", u"Estadisticas", None))
+        self.label.setText(QCoreApplication.translate("VistaHabitos", u"Estadisticas:", None))
     # retranslateUi
 

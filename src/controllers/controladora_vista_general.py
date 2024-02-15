@@ -17,7 +17,7 @@ class VistaGeneral(QWidget, Ui_GeneralView):
         self.tab_metas.setLayout(self.layout_contenedor_metas)
 
         self.layout_contenedor_habitos = QVBoxLayout()
-        self.tab_2.setLayout(self.layout_contenedor_habitos)
+        self.tab_3.setLayout(self.layout_contenedor_habitos)
 
 
 

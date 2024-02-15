@@ -72,9 +72,13 @@ def dame_graficas(ruta):
 
 
     #GRAFICAR
+
+
+
+    #Grafica 1
     colors = sns.color_palette("deep")
-    fig, ax = plt.subplots(1, 2, figsize=(7, 3))
-    fig.set_facecolor('#a8dadc')
+    fig1, ax = plt.subplots(1, 1, figsize=(5, 2))
+    fig1.set_facecolor('#a8dadc')
     # Filtrar los datos para excluir los días con contador 0
     frec_dia_filtrado = frec_dia[frec_dia.values != 0]
 
@@ -82,24 +86,29 @@ def dame_graficas(ruta):
     frec_dia_filtrado.index = frec_dia_filtrado.index.astype(str)
 
     # Graficar un gráfico de barras en el primer eje
-    ax[0].bar(frec_dia_filtrado.index, frec_dia_filtrado.values, alpha=0.75, color='#2a9d8f')
-    ax[0].set_title('Hábitos por día')
-    ax[0].set_xlabel('Numero del Día')
-    ax[0].set_ylabel('Frecuencia')
+    ax.bar(frec_dia_filtrado.index, frec_dia_filtrado.values, alpha=0.75, color='#2a9d8f')
+    ax.set_title('Hábitos por día')
+    ax.set_xlabel('Numero del Día')
+    ax.set_ylabel('Frecuencia')
 
     # Graficar un gráfico de líneas en el segundo eje
-    ax[0].plot(frec_dia_filtrado.index, frec_dia_filtrado.values, alpha=0.85)
+    ax.plot(frec_dia_filtrado.index, frec_dia_filtrado.values, alpha=0.85)
+    plt.tight_layout()
 
 
+    # Grafica 2
+    fig2, ax = plt.subplots(1, 1, figsize=(6, 2))
+    fig2.set_facecolor('#a8dadc')
     frec_habit_filtrado = habits_ordenados[habits_ordenados.values != 0]
     #colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', 'orange', 'purple', 'brown']
-    ax[1].barh(frec_habit_filtrado.index, frec_habit_filtrado.values, color=colors )
-    ax[1].set_title('Total dias cumplidos ')
-    ax[1].set_xlabel('Cantidad total de dias')
-    ax[1].set_ylabel('Hábitos')
-    ax[1].set_xticks(range(0,16,2))
+    bars = ax.barh(frec_habit_filtrado.index, frec_habit_filtrado.values, color=colors )
+    ax.set_title('Total dias cumplidos ')
+    ax.set_xlabel('Cantidad total de dias')
+    ax.set_ylabel('Hábitos')
+    ax.set_xticks(range(0,16,2))
+    
 
     # Ajustar el diseño de las subtramas
     plt.tight_layout()
 
-    return fig
+    return f'Habitos con mayor frecuencia: \n {habits_maxfrec}', f'Habitos con menor frecuencia: \n {habits_minfrec}', f'Dia con mas habitos cumplidos: \n {days_maxfrec}', f'Dia con menor habitos cumplidos \n {days_minfrec}', f'Habitos con mayor racha \n f{habits_maxrach}', f'Porcentaje total de cumplimiento: {habits_porcent}',  fig2 , fig1, habits_ordenados
