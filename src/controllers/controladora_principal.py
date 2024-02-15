@@ -65,7 +65,7 @@ class VistaPrincipal(QMainWindow, Ui_MainWindow):
         if validador:  
             self.contenedor_form.removeWidget(self)
             self.vista_formulario.deleteLater()
-            self.vista_review.dame_info_view(nombre_sprint, tp_sprint, ruta_objs, ruta_habitos, ruta_diamond, ruta_entreno)
+            self.vista_review.dame_info_view(nombre_sprint, tp_sprint, ruta_objs)
             self.contenedor_form.addWidget(self.vista_review)  
     
     def cancelar_form(self):

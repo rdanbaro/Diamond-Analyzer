@@ -13,7 +13,7 @@ class SprintReview(QWidget, Ui_Sprint_Review):
 
 
         
-    def dame_info_view(self,nombre_sprint, tp_sprint, ruta_objs, ruta_habitos, ruta_diamond, ruta_entreno):
+    def dame_info_view(self,nombre_sprint, tp_sprint, ruta_objs):
         self.label_nombre_sprint.setText(nombre_sprint)
         self.label_tipo_sprint.setText(tp_sprint)
         

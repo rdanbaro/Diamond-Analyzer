@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QWidget, QPushButton, QVBoxLayout
 import database
 from models.modelos import Sprint
 from controllers.controladora_review import SprintReview
-
+from controllers.controladora_vista_habitos import Habitos
 
 class VistaGeneral(QWidget, Ui_GeneralView):
     def __init__(self):
@@ -15,6 +15,12 @@ class VistaGeneral(QWidget, Ui_GeneralView):
 
         self.layout_contenedor_metas = QVBoxLayout()
         self.tab_metas.setLayout(self.layout_contenedor_metas)
+
+        self.layout_contenedor_habitos = QVBoxLayout()
+        self.tab_2.setLayout(self.layout_contenedor_habitos)
+
+
+
         
         self.layout_sprints = QVBoxLayout()
         self.layout_sprints.setAlignment(Qt.AlignTop)
@@ -26,7 +32,7 @@ class VistaGeneral(QWidget, Ui_GeneralView):
         self.scrollArea.setWidget(self.widget_2)
         
         self.vista_metas = SprintReview()
-          
+        self.vista_habitos = Habitos()  
         
 
     def mostrar_sprint(self, titulo):
@@ -37,10 +43,14 @@ class VistaGeneral(QWidget, Ui_GeneralView):
         self.vista_metas = SprintReview()
         #self.vista_metas.removeWidget(self.vista.Boton_Siguiente)
         self.vista_metas.Boton_Siguiente.deleteLater()
-        self.vista_metas.dame_info_view(sprint.nombre_sprint, sprint.tipo, sprint.data_metas_objetivos, sprint.data_Habitos, sprint.data_Diamantes, sprint.data_Entrenamiento)
+        self.vista_metas.dame_info_view(sprint.nombre_sprint, sprint.tipo, sprint.data_metas_objetivos)
         self.layout_contenedor_metas.addWidget(self.vista_metas)
         
-        
+        self.layout_contenedor_habitos.removeWidget(self.vista_habitos)
+        self.vista_habitos.deleteLater()
+        self.vista_habitos = Habitos()
+        self.vista_habitos.dame_vista(sprint.nombre_sprint, sprint.tipo, sprint.data_Habitos)
+        self.layout_contenedor_habitos.addWidget(self.vista_habitos)
 
         
 
