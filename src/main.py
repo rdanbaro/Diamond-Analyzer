@@ -10,14 +10,14 @@ app = QApplication(sys.argv)
 inicio = VistaPrincipal()
 
 
+
+
 app.exec()
 
 if __name__ == "__main__":
-    #Base.metadata.drop_all(database.link) 
+    # Base.metadata.drop_all(database.link)
     try:
         Base.metadata.create_all(database.link)
-    
+
     except Exception as e:
         print("seguimos adelante")
-
- 
