@@ -12,7 +12,7 @@ inicio = VistaPrincipal()
 
 
 
-app.exec()
+app.exec() 
 
 if __name__ == "__main__":
     # Base.metadata.drop_all(database.link)

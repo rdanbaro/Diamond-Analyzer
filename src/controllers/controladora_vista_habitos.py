@@ -1,6 +1,6 @@
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QTabWidget, QLabel
-from analysis.modulo_ds import dame_graficas
+from analysis.modulo_ds import dame_graficas_habitos
 from views.ui_vista_habitos import Ui_VistaHabitos
 
 
@@ -13,7 +13,7 @@ class Habitos(QWidget, Ui_VistaHabitos):
     def dame_vista(self, nombre_sprint, tp_sprint, ruta_habitos):
 
         habit_max_frec, habit_min_frec, dia_max_frec, dia_min_frec, habit_maxRch, prct_habits, graf1, graf2, graf3 = (
-            dame_graficas(ruta_habitos))
+            dame_graficas_habitos(ruta_habitos))
         canvas1 = FigureCanvas(graf1)
         canvas2 = FigureCanvas(graf2)
         # canvas3 = FigureCanvas(graf3)
