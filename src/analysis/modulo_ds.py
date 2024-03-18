@@ -6,7 +6,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+from analysis.personalizados import convertir_horas_wh_a_entero
+from matplotlib.figure import Figure
 # %%
 # Funcion utilizada en el apply para buscar habito con mas dias consecutivos
 
@@ -114,3 +115,98 @@ def dame_graficas_habitos(ruta):
     plt.tight_layout()
 
     return f'Habitos con mayor frecuencia: \n {habits_maxfrec}', f'Habitos con menor frecuencia: \n {habits_minfrec}', f'Dia con mas habitos cumplidos: \n {days_maxfrec}', f'Dia con menor habitos cumplidos \n {days_minfrec}', f'Habitos con mayor racha \n f{habits_maxrach}', f'Porcentaje total de cumplimiento: {habits_porcent}',  fig2, fig1, habits_ordenados
+
+
+def dame_graficas_diamantes(ruta):
+
+    # Carga y preparacion de los datos
+
+    df = pd.read_csv(ruta)
+
+    df = df.drop(len(df)-1)
+    df = df.fillna('Ocio')
+
+    df_preparado = df.drop(columns=['Unnamed: 6', 'Inicio', 'Fin'])
+    df_preparado['Duración'] = df_preparado['Duración'].apply(
+        convertir_horas_wh_a_entero)
+
+    # Estadisticas
+
+    # Calculo total horas trackeadas
+    total_horas_trackeadas = df_preparado['Duración'].sum()
+
+    # Calculo categoria con mayor tiempo invertido
+    tiempo_por_categoria = df_preparado.groupby(['Etiquetas']).sum()
+
+    cat_mayor_tiempo = tiempo_por_categoria['Duración'].idxmax()
+
+    # Calculo actividad con mayor tiempo invertido
+    tiempo_por_actividad = df_preparado.groupby(['Tarea']).sum().reset_index()
+    por_actividad_ordenado = tiempo_por_actividad.sort_values(
+        by='Duración', ascending=False)
+
+    act_mayor_tiempo = tiempo_por_actividad['Duración'].idxmax()
+
+    # Calculo porcentaje de tiempo trackeado
+    tiempo_por_dia = df_preparado.groupby(['Día']).sum()
+    tiempo_por_dia_por_categoria = df_preparado.groupby(
+        ['Día', 'Etiquetas']).sum().reset_index()
+    cant_de_dias = len(tiempo_por_dia)
+    horas_totales = cant_de_dias * 24
+
+    prct_tiempo_track = total_horas_trackeadas / horas_totales * 100
+
+    # Graficas
+
+    # Grafico de barras: tiempo invertido x categoria
+    fig1 = plt.figure()
+    fig1.set_facecolor('#8D99AE')
+    ax = fig1.add_subplot(1, 1, 1)
+
+    sns.barplot(data=tiempo_por_categoria, x=tiempo_por_categoria.index,
+                y=tiempo_por_categoria['Duración'], hue='Etiquetas')
+
+    plt.ylabel('Tiempo(h)')
+    plt.xlabel('Categorías')
+
+    plt.yticks(range(0, 50, 4))
+
+    # Grafico de lineas: tiempo de categorias x dia
+    fig2 = plt.figure()
+    fig2.set_facecolor('#8D99AE')
+    ax = fig2.add_subplot(1, 1, 1)
+    
+    sns.lineplot(data=tiempo_por_dia_por_categoria,
+                 x=tiempo_por_dia_por_categoria['Día'], y=tiempo_por_dia_por_categoria['Duración'], hue='Etiquetas')
+
+    plt.ylabel('Tiempo(h)')
+
+    plt.xticks(rotation=45)
+    plt.yticks(range(0, 10))
+
+    # Grafico de barras: tiempo invertido x actividad
+    fig3 = plt.figure(figsize=(3, 3))
+    fig3.set_facecolor('#8D99AE')
+    ax = fig3.add_subplot(1, 1, 1)
+    sns.barplot(data=por_actividad_ordenado,
+                x=por_actividad_ordenado['Duración'], y=por_actividad_ordenado['Tarea'], hue='Tarea')
+
+    plt.ylabel('Actividad')
+    plt.xlabel('Tiempo(h)')
+
+    # Grafico de pastel: tiempo invertido x categoria en prct
+    porcentajes = [
+        f'{(i/total_horas_trackeadas*100):.1f}' for i in tiempo_por_categoria['Duración']]
+    porcentajes.sort()
+    porcentajes.reverse()
+
+    fig4 = plt.figure() #8D99AE
+    fig4.set_facecolor('#8D99AE')
+    ax = fig4.add_subplot(1, 1, 1)
+    plt.pie(x=tiempo_por_categoria['Duración'].sort_values(ascending=False),
+            shadow=True, wedgeprops={'width': 0.5}, pctdistance=0.85, autopct='%1.1f%%')
+
+    plt.legend(labels=[f"{cat}- {p}%" for cat, p in zip(
+        tiempo_por_categoria.sort_values(by='Duración', ascending=False).index, porcentajes)], loc='upper right', bbox_to_anchor=(1.5, 1))
+
+    return f'{total_horas_trackeadas}', f'{cat_mayor_tiempo}', f'{act_mayor_tiempo}', f'{prct_tiempo_track}', fig1, fig2, fig3, fig4
