@@ -9,6 +9,7 @@ class SprintReview(QWidget, Ui_Sprint_Review):
         super().__init__()
 
         self.setupUi(self)
+        self.valor = []
 
     def dame_info_view(self, nombre_sprint, tp_sprint, ruta_objs):
         self.label_nombre_sprint.setText(nombre_sprint)
@@ -26,7 +27,7 @@ class SprintReview(QWidget, Ui_Sprint_Review):
         for i in ls_requisito:
             self.Layout_requisitos.addWidget(QLabel(str(i)))
 
-        valor = [ls_cumplido[i]/ls_requisito[i] *
+        self.valor = [ls_cumplido[i]/ls_requisito[i] *
                  100 for i in range(len(ls_cumplido))]
 
         for i in range(len(ls_cumplido)):
@@ -38,7 +39,7 @@ class SprintReview(QWidget, Ui_Sprint_Review):
             else:
                 progress_bar = QProgressBar()
                 # Establecer el valor de la barra de progreso en función de i
-                progress_bar.setValue(valor[i])
+                progress_bar.setValue(self.valor[i])
                 self.Layout_cumplidos.addWidget(progress_bar)
 
         for i in ls_realizado:
@@ -48,10 +49,13 @@ class SprintReview(QWidget, Ui_Sprint_Review):
                 "QCheckBox::indicator { width: 21px; height: 21px; }")
             self.Layout_checks.addWidget(check_box)
 
-        total_cumplido = sum(ls_cumplido)
-        total_requisito = sum(ls_requisito)
-        porcentaje_cumplimiento = total_cumplido / total_requisito * 100
-        print(porcentaje_cumplimiento, total_cumplido, total_requisito, sep="\n")
+        # total_cumplido = sum(ls_cumplido)
+        # total_requisito = sum(ls_requisito)
+        # porcentaje_cumplimiento = total_cumplido / total_requisito * 100
+        
+        porcentaje_cumplimiento = sum(self.valor) / len(self.valor) 
+        print(porcentaje_cumplimiento)
+        #print(porcentaje_cumplimiento, total_cumplido, total_requisito, sep="\n")
         self.progreso_general.setValue(porcentaje_cumplimiento)
 
         if porcentaje_cumplimiento < 40:
