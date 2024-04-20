@@ -19,9 +19,9 @@ class VistaPrincipal(QMainWindow, Ui_MainWindow):
         self.vista_inicio.show()
 
 
-        self.vista_inicio.sprintAnalysisButton.clicked.connect(self.mostrar_form)
-        self.vista_inicio.statsButton.clicked.connect(self.mostrar_vista_general)
-        self.vista_inicio.exitButton.clicked.connect(self.cerrar_inicio)
+        self.vista_inicio.sprintAnalysisButton.released.connect(self.mostrar_form)
+        self.vista_inicio.statsButton.released.connect(self.mostrar_vista_general)
+        self.vista_inicio.exitButton.released.connect(self.cerrar_inicio)
         
 
 

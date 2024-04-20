@@ -5,6 +5,7 @@ import database
 from models.modelos import Sprint
 from controllers.controladora_review import SprintReview
 from controllers.controladora_vista_habitos import Habitos
+from controllers.controladora_vista_diamantes import Diamantes
 
 
 class VistaGeneral(QWidget, Ui_GeneralView):
@@ -19,6 +20,9 @@ class VistaGeneral(QWidget, Ui_GeneralView):
 
         self.layout_contenedor_habitos = QVBoxLayout()
         self.tab_3.setLayout(self.layout_contenedor_habitos)
+        
+        self.layout_contenedor_diamantes = QVBoxLayout()
+        self.tab_2.setLayout(self.layout_contenedor_diamantes)
 
         self.layout_sprints = QVBoxLayout()
         self.layout_sprints.setAlignment(Qt.AlignTop)
@@ -30,6 +34,7 @@ class VistaGeneral(QWidget, Ui_GeneralView):
 
         self.vista_metas = SprintReview()
         self.vista_habitos = Habitos()
+        self.vista_diamantes = Diamantes()
 
     def mostrar_sprint(self, titulo):
         sprint = database.sesion.query(Sprint).filter(
@@ -49,6 +54,14 @@ class VistaGeneral(QWidget, Ui_GeneralView):
         self.vista_habitos.dame_vista(
             sprint.nombre_sprint, sprint.tipo, sprint.data_Habitos)
         self.layout_contenedor_habitos.addWidget(self.vista_habitos)
+        
+        self.layout_contenedor_diamantes.removeWidget(self.vista_diamantes)
+        self.vista_diamantes.deleteLater()
+        self.vista_diamantes = Diamantes()
+        self.vista_diamantes.dame_vista(
+            sprint.nombre_sprint, sprint.tipo, sprint.data_Diamantes)
+        self.layout_contenedor_diamantes.addWidget(self.vista_diamantes)
+        
 
     def mostrar_sprint_guardados(self):
         sprints = database.sesion.query(Sprint).all()
