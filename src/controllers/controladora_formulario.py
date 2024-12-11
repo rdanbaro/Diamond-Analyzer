@@ -3,6 +3,8 @@ from PySide6.QtWidgets import QWidget
 import database
 from models.modelos import Sprint
 
+import requests
+
 class Formulario(QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
@@ -78,16 +80,36 @@ class Formulario(QWidget, Ui_Form):
 
         if form_valido:
             # Crear una nueva fila en la tabla Sprint
-            new_sprint = Sprint(nombre_sprint=sprint, tipo=tipo_sprint_seleccionado, data_metas_objetivos=metas,
-                                data_Habitos=habitos, data_Diamantes=diamantes, data_Entrenamiento=entrenamiento)
+            #new_sprint = Sprint(nombre_sprint=sprint, tipo=tipo_sprint_seleccionado, data_metas_objetivos=metas,
+            #                    data_Habitos=habitos, data_Diamantes=diamantes, data_Entrenamiento=entrenamiento)
     
-            # Agregar la nueva fila a la sesión
-            database.sesion.add(new_sprint)
+            ## Agregar la nueva fila a la sesión
+            #database.sesion.add(new_sprint)
     
             # Confirmar los cambios en la base de datos
-            database.sesion.commit()
+            #database.sesion.commit()
+            sprint = {
+                "nombre": sprint,
+                "tipo": tipo_sprint_seleccionado,
+                "ruta_metas_objetivos": metas,
+                "ruta_habitos": habitos,
+                "ruta_entrenamiento": entrenamiento,
+                "ruta_diamantes": diamantes
+            }
+            
 
-                
+            # URL de la API
+            url = "http://127.0.0.1:8000/sprints/"
+
+            response = requests.post(url, json=sprint)
+
+            if response.status_code == 201:
+                # Obtener el ID del objeto creado
+                id_objeto = response.json()["id"]
+                print("Objeto creado con ID:", id_objeto)
+            else:
+                print("Error:", response.status_code)
+                    
                 
             return form_valido, sprint, tipo_sprint_seleccionado, metas, habitos, diamantes, entrenamiento 
         else:
