@@ -4,6 +4,7 @@ import database
 from models.modelos import Sprint
 
 import requests
+from apiConfig import API_URL
 
 class Formulario(QWidget, Ui_Form):
     def __init__(self):
@@ -88,7 +89,7 @@ class Formulario(QWidget, Ui_Form):
     
             # Confirmar los cambios en la base de datos
             #database.sesion.commit()
-            sprint = {
+            sprint_object = {
                 "nombre": sprint,
                 "tipo": tipo_sprint_seleccionado,
                 "ruta_metas_objetivos": metas,
@@ -97,16 +98,16 @@ class Formulario(QWidget, Ui_Form):
                 "ruta_diamantes": diamantes
             }
             
+            
 
-            # URL de la API
-            url = "http://127.0.0.1:8000/sprints/"
+            
 
-            response = requests.post(url, json=sprint)
+            response = requests.post(API_URL+'sprints/', json=sprint_object)
 
             if response.status_code == 201:
                 # Obtener el ID del objeto creado
-                id_objeto = response.json()["id"]
-                print("Objeto creado con ID:", id_objeto)
+                #nombre_objeto = response.json()["nombre"]
+                print("Objeto creado con nombre:", response.json())
             else:
                 print("Error:", response.status_code)
                     

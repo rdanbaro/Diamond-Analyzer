@@ -7,6 +7,8 @@ from controllers.controladora_review import SprintReview
 from controllers.controladora_vista_habitos import Habitos
 from controllers.controladora_vista_diamantes import Diamantes
 
+import requests
+from apiConfig import API_URL
 
 class VistaGeneral(QWidget, Ui_GeneralView):
     def __init__(self):
@@ -39,13 +41,19 @@ class VistaGeneral(QWidget, Ui_GeneralView):
     def mostrar_sprint(self, titulo):
         sprint = database.sesion.query(Sprint).filter(
             Sprint.nombre_sprint == titulo).first()
+        
+        response = requests.get(API_URL+f'sprints/{titulo}')
+        
+        if response.status_code == 200:
+            data = response.json()
+        
         self.layout_contenedor_metas.removeWidget(self.vista_metas)
         self.vista_metas.deleteLater()
 
         self.vista_metas = SprintReview()
         self.vista_metas.Boton_Siguiente.deleteLater()
         self.vista_metas.dame_info_view(
-            sprint.nombre_sprint, sprint.tipo, sprint.data_metas_objetivos)
+            data['nombre'], data['tipo'], data["ruta_metas_objetivos"])
         self.layout_contenedor_metas.addWidget(self.vista_metas)
 
         self.layout_contenedor_habitos.removeWidget(self.vista_habitos)
@@ -64,9 +72,17 @@ class VistaGeneral(QWidget, Ui_GeneralView):
         
 
     def mostrar_sprint_guardados(self):
-        sprints = database.sesion.query(Sprint).all()
-        for sprint in sprints:
-            button = QPushButton(sprint.nombre_sprint)
+        #sprints = database.sesion.query(Sprint).all()
+        
+        response = requests.get(API_URL+'sprints/')
+        
+        if response.status_code == 200:
+            data = response.json()
+           
+        #print("respuesta api:", data.items())
+        
+        for sprint in data:
+            button = QPushButton(sprint['nombre'])
             button.setMinimumSize(265, 30)
             self.lista_botones.append(button)
 
