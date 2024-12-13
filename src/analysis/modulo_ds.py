@@ -103,7 +103,7 @@ def dame_graficas_habitos(ruta):
     data_habit_example = pd.read_csv(ruta)
     me_interesa_d = data_habit_example.drop(columns=['Progress', 'Status', 'Day']).iloc[len(
         data_habit_example)-len(data_habit_example):len(data_habit_example)]
-    me_interesa = data_habit_example.drop(columns=['Date', 'Progress', 'Status', 'Day']).iloc[len(
+    me_interesa = data_habit_example.drop(columns=['Created Day', 'Progress', 'Status', 'Day']).iloc[len(
         data_habit_example)-len(data_habit_example):len(data_habit_example)]
 
     # Habito mayor&menor frecuencia

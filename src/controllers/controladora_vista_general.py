@@ -53,21 +53,21 @@ class VistaGeneral(QWidget, Ui_GeneralView):
         self.vista_metas = SprintReview()
         self.vista_metas.Boton_Siguiente.deleteLater()
         self.vista_metas.dame_info_view(
-            data['nombre'], data['tipo'], data["ruta_metas_objetivos"])
+            data['id'], data['nombre'], data['tipo'], data["ruta_metas_objetivos"])
         self.layout_contenedor_metas.addWidget(self.vista_metas)
 
         self.layout_contenedor_habitos.removeWidget(self.vista_habitos)
         self.vista_habitos.deleteLater()
         self.vista_habitos = Habitos()
         self.vista_habitos.dame_vista(
-            sprint.nombre_sprint, sprint.tipo, sprint.data_Habitos)
+            data['nombre'], data['tipo'], data["ruta_habitos"])
         self.layout_contenedor_habitos.addWidget(self.vista_habitos)
         
         self.layout_contenedor_diamantes.removeWidget(self.vista_diamantes)
         self.vista_diamantes.deleteLater()
         self.vista_diamantes = Diamantes()
         self.vista_diamantes.dame_vista(
-            sprint.nombre_sprint, sprint.tipo, sprint.data_Diamantes)
+            data['nombre'], data['tipo'], data["ruta_diamantes"])
         self.layout_contenedor_diamantes.addWidget(self.vista_diamantes)
         
 

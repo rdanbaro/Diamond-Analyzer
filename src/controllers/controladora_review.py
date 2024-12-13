@@ -3,6 +3,8 @@ from PySide6.QtWidgets import QWidget, QLabel, QProgressBar, QCheckBox
 from analysis.modulo_ds import get_datos_metas
 from PySide6.QtCore import QCoreApplication
 
+from apiConfig import API_URL
+import requests
 
 class SprintReview(QWidget, Ui_Sprint_Review):
     def __init__(self):
@@ -11,13 +13,34 @@ class SprintReview(QWidget, Ui_Sprint_Review):
         self.setupUi(self)
         self.valor = []
 
-    def dame_info_view(self, nombre_sprint, tp_sprint, ruta_objs):
+    def dame_info_view(self, id, nombre_sprint, tp_sprint, ruta_objs):
         self.label_nombre_sprint.setText(nombre_sprint)
         self.label_tipo_sprint.setText(tp_sprint)
 
-        # gestion info ruta objetivos y metas
-        ls_objs, ls_requisito, ls_cumplido, ls_realizado = get_datos_metas(
-            ruta_objs)
+        response = requests.get(API_URL+f'sprint_metas/{id}')
+        
+        if response.status_code == 200:
+            data = response.json()
+           
+        #print("respuesta api:", data.items())
+        
+        ls_objs = []
+        ls_requisito = []
+        ls_cumplido = []
+        ls_realizado = []
+        
+        for meta in data:
+            print(meta)
+            ls_objs.append(meta['obj'])
+            ls_requisito.append(meta['requisito'])
+            ls_cumplido.append(meta['cumplido'])
+            ls_realizado.append(meta['realizado'])
+        
+        
+        
+        # # gestion info ruta objetivos y metas
+        # ls_objs, ls_requisito, ls_cumplido, ls_realizado = get_datos_metas(
+        #     ruta_objs)
 
         # ls_cumplido = [100 if i == True else i for i in ls_cumplido]
 
