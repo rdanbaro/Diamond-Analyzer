@@ -60,14 +60,14 @@ class VistaGeneral(QWidget, Ui_GeneralView):
         self.vista_habitos.deleteLater()
         self.vista_habitos = Habitos()
         self.vista_habitos.dame_vista(
-            data['nombre'], data['tipo'], data["ruta_habitos"])
+            data['id'], data['nombre'], data['tipo'], data["ruta_habitos"])
         self.layout_contenedor_habitos.addWidget(self.vista_habitos)
         
         self.layout_contenedor_diamantes.removeWidget(self.vista_diamantes)
         self.vista_diamantes.deleteLater()
         self.vista_diamantes = Diamantes()
         self.vista_diamantes.dame_vista(
-            data['nombre'], data['tipo'], data["ruta_diamantes"])
+            data['id'], data['nombre'], data['tipo'], data["ruta_diamantes"])
         self.layout_contenedor_diamantes.addWidget(self.vista_diamantes)
         
 
