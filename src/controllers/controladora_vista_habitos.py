@@ -37,7 +37,7 @@ class Habitos(QWidget, Ui_VistaHabitos):
             
             habit_max_frec, habit_min_frec, dia_max_frec, dia_min_frec, habit_maxRch, prct_habits, graf3, longitud = (response.json())
             
-            print("Tipo de graf3:", graf3)
+            
          
             graf3 = graf3[1:-1].split(',')
            #graf3 = graf3.sort_values(by='datos', ascending=False)
@@ -108,7 +108,7 @@ class Habitos(QWidget, Ui_VistaHabitos):
         self.Layout_graf1.addWidget(canvas1)
         self.Layout_graf2.addWidget(canvas2)
 
-        print("graf3:", graf3)
+        
         
         for i in range(longitud):
             if i >= longitud/2:
