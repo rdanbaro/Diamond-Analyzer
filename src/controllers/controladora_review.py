@@ -30,7 +30,6 @@ class SprintReview(QWidget, Ui_Sprint_Review):
         ls_realizado = []
         
         for meta in data:
-            print(meta)
             ls_objs.append(meta['obj'])
             ls_requisito.append(meta['requisito'])
             ls_cumplido.append(meta['cumplido'])

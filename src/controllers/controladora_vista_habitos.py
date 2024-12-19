@@ -9,8 +9,10 @@ from io import StringIO
 from apiConfig import API_URL
 import requests
 import zipfile
+import pickle
 import io
 import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
 import pandas as pd
 
 class Habitos(QWidget, Ui_VistaHabitos):
@@ -37,9 +39,10 @@ class Habitos(QWidget, Ui_VistaHabitos):
             
             print("Tipo de graf3:", graf3)
          
-            graf3 = pd.DataFrame(graf3.split('\n'), columns=['datos'])
-            graf3[['habito', 'valor']] = graf3['datos'].str.rsplit(n=1, expand=True)
-            graf3 = graf3.drop('datos', axis=1)    # if isinstance(graf3, str):
+            graf3 = graf3[1:-1].split(',')
+           #graf3 = graf3.sort_values(by='datos', ascending=False)
+           #graf3[['habito', 'valor']] = graf3['datos'].str.rsplit(n=1, expand=True)
+            #raf3 = graf3.drop('datos', axis=1)    # if isinstance(graf3, str):
         #     graf3 = eval(graf3)
     
         # # Ahora crea el DataFrame
@@ -54,18 +57,27 @@ class Habitos(QWidget, Ui_VistaHabitos):
                 zip_file.extractall()
         
         
-            # Crear instancias de Figure y FigureCanvas con las figuras descargadas
-            graf1 = plt.imread('figura1.png')
-            graf2 = plt.imread('figura2.png')
+            # # Crear instancias de Figure y FigureCanvas con las figuras descargadas
+            # graf1 = plt.imread('figura1.png')
+            # graf2 = plt.imread('figura2.png')
             
-            fig1 = plt.figure()
-            ax1 = fig1.add_subplot(111)
-            ax1.imshow(graf1)
+            # fig1 =Figure()
+            # ax1 = fig1.add_subplot(111)
+            # ax1.imshow(graf1)
+            # ax1.axis('off')
             
-            fig2 = plt.figure()
-            ax2 = fig2.add_subplot(111)
-            ax2.imshow(graf2)
-            
+            # fig2 =Figure()
+            # ax2 = fig2.add_subplot(111)
+            # ax2.imshow(graf2)
+            # ax2.axis('off')
+             
+            with open('figura1.pkl', 'rb') as f:
+                fig1 = pickle.load(f)
+            with open('figura2.pkl', 'rb') as f:
+                fig2 = pickle.load(f) 
+             
+             
+                    
             # Crear instancias de FigureCanvas con las figuras
             canvas1 = FigureCanvas(fig1)
             canvas2 = FigureCanvas(fig2)
@@ -100,6 +112,6 @@ class Habitos(QWidget, Ui_VistaHabitos):
         
         for i in range(longitud):
             if i >= longitud/2:
-                self.Layout_graf3_2.addWidget(QLabel(graf3.index[i]))
+                self.Layout_graf3_2.addWidget(QLabel(graf3[i]))
             else:
-                self.Layout_graf3_1.addWidget(QLabel(graf3.index[i]))
+                self.Layout_graf3_1.addWidget(QLabel(graf3[i]))
