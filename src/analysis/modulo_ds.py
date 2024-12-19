@@ -1,18 +1,42 @@
 
 # ## Importaciones
 
-# %%
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from analysis.personalizados import convertir_horas_wh_a_entero
 from matplotlib.figure import Figure
-# %%
+
+
+
 # Funcion utilizada en el apply para buscar habito con mas dias consecutivos
 
-
 def count_consecutive_yes(series):
+    """
+    Cuenta la cantidad de dias consecutivos de 'Yes' en una serie, es decir,
+    cuantos dias seguidos se ha cumplido con el habito.
+
+    Parameters
+    ----------
+    series: pd.Series
+        Serie de valores que se quieren contar, estos pueden ser 'Yes' o 'No'.
+
+    Returns
+    -------
+    int
+        Cantidad de dias consecutivos de 'Yes' en la serie.
+
+    Examples
+    --------
+    >>> count_consecutive_yes(['Yes', 'Yes', 'No', 'Yes'])
+    2
+    >>> count_consecutive_yes(['Yes', 'Yes', 'Yes', 'Yes'])
+    4
+    >>> count_consecutive_yes(['Yes', 'Yes', 'Yes', 'No'])
+    3
+    """
     max_consecutive_yes = 0
     current_consecutive_yes = 0
     for value in series:
@@ -26,6 +50,23 @@ def count_consecutive_yes(series):
 
 
 def get_datos_metas(ruta):
+    """
+    Funcion que devuelve los datos de metas de un csv.
+    Dado un csv, devuelve 4 listas: Objetivos, Requisitos, Logros y Realizados.
+    Los Objetivos son los de la columna Pendientes, los Requisitos son los de la columna Requisito, los Logros son los de la columna Cumplido y los Realizados son los de la columna Realizado.
+    Los valores de la columna Requisito y Cumplido se reemplazan por 1 o 0 si estan vacios.
+    Los valores de la columna Realizado se reemplazan por True o False si estan vacios.
+
+    Parameters
+    ----------
+    ruta: str
+        Ruta del csv que se quiere leer.
+
+    Returns
+    -------
+    list
+        4 listas: Objetivos, Requisitos, Logros y Realizados.
+    """
     datos = pd.read_csv(ruta)
 
     list_objs = [i.strip() for i in list(datos['Pendientes'])]
@@ -38,11 +79,32 @@ def get_datos_metas(ruta):
 
 
 def dame_graficas_habitos(ruta):
+    """
+    Funcion que devuelve un tuple de 7 valores:
+    - str con los habitos con mayor frecuencia
+    - str con los habitos con menor frecuencia
+    - str con el dia con mas habitos cumplidos
+    - str con el dia con menor habitos cumplidos
+    - str con los habitos con mayor racha
+    - str con el porcentaje total de cumplimiento
+    - Una figura con un gráfico de barras que muestra la frecuencia de habitos por dia
+    - Una figura con un gráfico de barras que muestra la cantidad total de dias cumplidos por cada habito
+
+    Parameters
+    ----------
+    ruta: str
+        Ruta del csv que contiene los datos de los habitos.
+
+    Returns
+    -------
+    tuple
+        7 valores: str con los habitos con mayor frecuencia, str con los habitos con menor frecuencia, str con el dia con mas habitos cumplidos, str con el dia con menor habitos cumplidos, str con los habitos con mayor racha, str con el porcentaje total de cumplimiento, una figura con un gráfico de barras que muestra la frecuencia de habitos por dia y una figura con un gráfico de barras que muestra la cantidad total de dias cumplidos por cada habito.
+    """
     data_habit_example = pd.read_csv(ruta)
     me_interesa_d = data_habit_example.drop(columns=['Progress', 'Status', 'Day']).iloc[len(
-        data_habit_example)-12:len(data_habit_example)]
-    me_interesa = data_habit_example.drop(columns=['Date', 'Progress', 'Status', 'Day']).iloc[len(
-        data_habit_example)-12:len(data_habit_example)]
+        data_habit_example)-len(data_habit_example):len(data_habit_example)]
+    me_interesa = data_habit_example.drop(columns=['Created Day', 'Progress', 'Status', 'Day']).iloc[len(
+        data_habit_example)-len(data_habit_example):len(data_habit_example)]
 
     # Habito mayor&menor frecuencia
     frec_habit = me_interesa.eq('Yes').sum()
@@ -56,7 +118,7 @@ def dame_graficas_habitos(ruta):
     # Frecuencia x dia
     new_name = me_interesa.transpose().reset_index()
 
-    new_name.columns = range(13)
+    new_name.columns = range(len(new_name.columns))
     frec_dia = new_name.eq('Yes').sum()
 
     dict_d = frec_dia.to_dict()
@@ -119,6 +181,28 @@ def dame_graficas_habitos(ruta):
 
 def dame_graficas_diamantes(ruta):
 
+    """
+    Funcion que devuelve un tuple de 8 valores:
+    - str con el total de horas trackeadas
+    - str con la categoria con mayor tiempo invertido
+    - str con la actividad con mayor tiempo invertido
+    - str con el porcentaje de tiempo trackeado
+    - una figura con un gráfico de barras que muestra el tiempo invertido x categoria
+    - una figura con un gráfico de líneas que muestra el tiempo de categorias x dia
+    - una figura con un gráfico de barras que muestra el tiempo invertido x actividad
+    - una figura con un gráfico de pastel que muestra el tiempo invertido x categoria en porcentaje
+
+    Parameters
+    ----------
+    ruta: str
+        Ruta del csv que contiene los datos de los diamantes.
+
+    Returns
+    -------
+    tuple
+        8 valores: str con el total de horas trackeadas, str con la categoria con mayor tiempo invertido, str con la actividad con mayor tiempo invertido, str con el porcentaje de tiempo trackeado, una figura con un gráfico de barras que muestra el tiempo invertido x categoria, una figura con un gráfico de líneas que muestra el tiempo de categorias x dia, una figura con un gráfico de barras que muestra el tiempo invertido x actividad y una figura con un gráfico de pastel que muestra el tiempo invertido x categoria en porcentaje.
+    """
+
     # Carga y preparacion de los datos
 
     df = pd.read_csv(ruta)
@@ -126,7 +210,7 @@ def dame_graficas_diamantes(ruta):
     df = df.drop(len(df)-1)
     df = df.fillna('Ocio')
 
-    df_preparado = df.drop(columns=['Unnamed: 6', 'Inicio', 'Fin'])
+    df_preparado = df.drop(columns=['Inicio', 'Fin'])
     df_preparado['Duración'] = df_preparado['Duración'].apply(
         convertir_horas_wh_a_entero)
 
@@ -210,3 +294,5 @@ def dame_graficas_diamantes(ruta):
         tiempo_por_categoria.sort_values(by='Duración', ascending=False).index, porcentajes)], loc='upper right', bbox_to_anchor=(1.5, 1))
 
     return f'{total_horas_trackeadas}', f'{cat_mayor_tiempo}', f'{act_mayor_tiempo}', f'{prct_tiempo_track}', fig1, fig2, fig3, fig4
+
+

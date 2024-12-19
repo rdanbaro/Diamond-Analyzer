@@ -3,6 +3,9 @@ from PySide6.QtWidgets import QWidget
 import database
 from models.modelos import Sprint
 
+import requests
+from apiConfig import API_URL
+
 class Formulario(QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
@@ -78,16 +81,36 @@ class Formulario(QWidget, Ui_Form):
 
         if form_valido:
             # Crear una nueva fila en la tabla Sprint
-            new_sprint = Sprint(nombre_sprint=sprint, tipo=tipo_sprint_seleccionado, data_metas_objetivos=metas,
-                                data_Habitos=habitos, data_Diamantes=diamantes, data_Entrenamiento=entrenamiento)
+            #new_sprint = Sprint(nombre_sprint=sprint, tipo=tipo_sprint_seleccionado, data_metas_objetivos=metas,
+            #                    data_Habitos=habitos, data_Diamantes=diamantes, data_Entrenamiento=entrenamiento)
     
-            # Agregar la nueva fila a la sesión
-            database.sesion.add(new_sprint)
+            ## Agregar la nueva fila a la sesión
+            #database.sesion.add(new_sprint)
     
             # Confirmar los cambios en la base de datos
-            database.sesion.commit()
+            #database.sesion.commit()
+            sprint_object = {
+                "nombre": sprint,
+                "tipo": tipo_sprint_seleccionado,
+                "ruta_metas_objetivos": metas,
+                "ruta_habitos": habitos,
+                "ruta_entrenamiento": entrenamiento,
+                "ruta_diamantes": diamantes
+            }
+            
+            
 
-                
+            
+
+            response = requests.post(API_URL+'sprints/', json=sprint_object)
+
+            if response.status_code == 201:
+                # Obtener el ID del objeto creado
+                #nombre_objeto = response.json()["nombre"]
+                print("Objeto creado con nombre:", response.json())
+            else:
+                print("Error:", response.status_code)
+                    
                 
             return form_valido, sprint, tipo_sprint_seleccionado, metas, habitos, diamantes, entrenamiento 
         else:
