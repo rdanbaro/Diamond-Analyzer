@@ -6,6 +6,7 @@ from models.modelos import Sprint
 from controllers.controladora_review import SprintReview
 from controllers.controladora_vista_habitos import Habitos
 from controllers.controladora_vista_diamantes import Diamantes
+from controllers.controladora_vista_entreno import Entrenos
 
 import requests
 from apiConfig import API_URL
@@ -25,6 +26,9 @@ class VistaGeneral(QWidget, Ui_GeneralView):
         
         self.layout_contenedor_diamantes = QVBoxLayout()
         self.tab_2.setLayout(self.layout_contenedor_diamantes)
+        
+        self.layout_contenedor_entrenos = QVBoxLayout()
+        self.tab.setLayout(self.layout_contenedor_entrenos)
 
         self.layout_sprints = QVBoxLayout()
         self.layout_sprints.setAlignment(Qt.AlignTop)
@@ -37,6 +41,7 @@ class VistaGeneral(QWidget, Ui_GeneralView):
         self.vista_metas = SprintReview()
         self.vista_habitos = Habitos()
         self.vista_diamantes = Diamantes()
+        self.vista_entrenos = Entrenos()
 
     def mostrar_sprint(self, titulo):
         sprint = database.sesion.query(Sprint).filter(
@@ -69,6 +74,13 @@ class VistaGeneral(QWidget, Ui_GeneralView):
         self.vista_diamantes.dame_vista(
             data['id'], data['nombre'], data['tipo'], data["ruta_diamantes"])
         self.layout_contenedor_diamantes.addWidget(self.vista_diamantes)
+        
+        self.layout_contenedor_entrenos.removeWidget(self.vista_entrenos)
+        self.vista_entrenos.deleteLater()
+        self.vista_entrenos = Entrenos()
+        self.vista_entrenos.dame_vista(
+            data['id'], data['nombre'], data['tipo'], data["ruta_entrenamiento"])
+        self.layout_contenedor_entrenos.addWidget(self.vista_entrenos)
         
 
     def mostrar_sprint_guardados(self):
